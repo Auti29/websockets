@@ -15,6 +15,25 @@ wss.on("connection", (socket) => {
    socket.on("message", (message) => {
         const parsedMsg = JSON.parse(message as unknown as string);
         if(parsedMsg.type === "join"){
+            //user can join only one room might change later
+
+            let currentUserRoom = null;
+            for(const [key, arr] of allSockets.entries()){
+                if(arr.includes(socket)){
+                    currentUserRoom = key;
+                }
+            }
+            if(currentUserRoom){
+                let crrRoomArr = allSockets.get(currentUserRoom);
+                let newArr = crrRoomArr?.filter(x => x !== socket);
+                crrRoomArr = newArr;
+                if(crrRoomArr){
+                    if(crrRoomArr.length > 0){
+                        allSockets.set(currentUserRoom, crrRoomArr);
+                    }
+                }
+            }
+
             if(!allSockets.has(parsedMsg.payload.roomId))
                 {
                     allSockets.set(parsedMsg.payload.roomId, [socket]);
@@ -22,7 +41,6 @@ wss.on("connection", (socket) => {
             else{
                 allSockets.get(parsedMsg.payload.roomId)?.push(socket);
             }
-            console.log(allSockets);
         }
 
         if(parsedMsg.type === "chat"){
