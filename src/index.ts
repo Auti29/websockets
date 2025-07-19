@@ -13,10 +13,49 @@ const allSockets = new Map<string, socketArrType>();
 wss.on("connection", (socket) => {
 
    socket.on("message", (message) => {
+        const parsedMsg = JSON.parse(message as unknown as string);
+        if(parsedMsg.type === "join"){
+            if(!allSockets.has(parsedMsg.payload.roomID))
+                {
+                    allSockets.set(parsedMsg.payload.roomID, [socket]);
+                }
+            else{
+                allSockets.get(parsedMsg.payload.roomID)?.push(socket);
+            }
+        }
 
+        if(parsedMsg.type === "chat"){
+            let currentUserRoom = null;
+            for(const [key, arr] of allSockets.entries()){
+                if(arr.includes(socket)){
+                    currentUserRoom = key;
+                }
+            }
+
+            if(currentUserRoom){
+                const userRoomArr = allSockets.get(currentUserRoom);
+                userRoomArr?.forEach((userSocket) => {
+                    userSocket.send(parsedMsg.payload.message);
+                })
+            }
+        }
+});
 });
 
-   socket.on("disconnect", () => {
 
-   })
-});
+//join room schema 
+    // {
+    // 	"type": "join",
+    // 	"payload": {
+    // 		"roomID": "123"
+    // 	}
+    // }
+
+
+//send msg schema 
+    // {
+    // 	"type": "chat",
+    // 	"payload": {
+    // 		"message: "hi there"
+    // 	}
+    // }
