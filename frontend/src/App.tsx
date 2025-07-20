@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react"
-const WS_URL = import.meta.env.VITE_WS_URL;
+const WS_URL = "ws://localhost:8080";
 function App() {
-  const [messages, setMessages] = useState<string[]>(["hi there","hello", "message"]);
+  const [messages, setMessages] = useState<string[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const wsRef = useRef<WebSocket | null>(null);
 
