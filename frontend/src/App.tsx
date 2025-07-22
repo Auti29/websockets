@@ -1,59 +1,33 @@
-import { useEffect, useRef, useState } from "react"
+import { useState } from "react"
 import { ChatComponent } from "./components/ChatComponent";
 import { JoinRoom } from "./components/JoinRoom";
-const WS_URL = "ws://localhost:8080";
 function App() {
-  const [messages, setMessages] = useState<string[]>([]);
   const [joinedRoom, setJoinedRoom] = useState<boolean>(false);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const wsRef = useRef<WebSocket | null>(null);
+  const [roomId, setRoomId] = useState<string>("");
 
-  useEffect(() => {
-    const ws = new WebSocket(WS_URL);
-    ws.onmessage = (event) => {
-      setMessages(m => [...m, event.data]);
-    }
-    wsRef.current = ws;
-    ws.onopen = () => {
-      //hardcoded logic to join rooms
-      ws.send(JSON.stringify(
-        {
-          "type": "join", 
-          "payload": {
-            "roomId": "123"
-          }
-        }
-      ));
-    }
-
-    //cleanup
-    return () => {
-      ws.close();
-    }
-
-  }, []);
-
-  const handleSendMsg = (message: string) => {
-    wsRef.current?.send(JSON.stringify({
-      "type": "chat", 
-      "payload": {
-        message: message
+  function generateRandomRoomId(length: number): string {
+      const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
+      let res = '';
+      for(let i = 0;i<length;i++){
+          const randomIdx = Math.floor(Math.random() * chars.length);
+          res+= chars.charAt(randomIdx);
       }
-    }))
+      console.log(res);
+      return res;
   }
+  
 
+ 
 
   return (
     <div className="h-screen w-screen bg-black text-white flex justify-center items-center">
       {
         joinedRoom ? 
         <ChatComponent 
-        messages={messages} 
-        handleSendMsg={handleSendMsg}
-        inputRef={inputRef}
+        roomId = {roomId}
         />
         :
-        <JoinRoom />
+        <JoinRoom onclick={() => setRoomId(generateRandomRoomId(7))} roomId = {roomId} />
       }
     </div>
   )
