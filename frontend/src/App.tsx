@@ -13,7 +13,8 @@ function App() {
           res+= chars.charAt(randomIdx);
       }
       console.log(res);
-      return res;
+      setRoomId(res);
+
   }
   
 
@@ -27,7 +28,7 @@ function App() {
         roomId = {roomId}
         />
         :
-        <JoinRoom onclick={() => setRoomId(generateRandomRoomId(7))} roomId = {roomId} />
+        <JoinRoom onclick={() => generateRandomRoomId(7)} roomId = {roomId} />
       }
     </div>
   )
