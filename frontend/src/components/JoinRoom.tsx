@@ -1,8 +1,17 @@
 import { useState } from "react";
 import { ChatIcon } from "../icons/ChatIcon";
 
-export function JoinRoom({onclick, roomId}: {onclick: () => void , roomId: string}){
+interface JoinroomInterface {
+    onclick: () => void , 
+    roomId: string, 
+    usernameRef: React.RefObject<HTMLInputElement | null>, 
+    roomcodeRef: React.RefObject<HTMLInputElement | null>, 
+    
+}
+
+export function JoinRoom({onclick, roomId, usernameRef, roomcodeRef}: JoinroomInterface){
     const [isCopied,  setIsCopied] = useState<boolean>(false);
+
     return (
         <div className="w-[40vw] border border-gray-700 p-5 rounded-xl font-mono">
             <div className="flex flex-col ">
@@ -16,9 +25,13 @@ export function JoinRoom({onclick, roomId}: {onclick: () => void , roomId: strin
                 setIsCopied(false);
                 onclick()}}
             className="text-lg w-full border border-white mt-4 mb-4 p-2 rounded-md bg-white text-stone-950 font-bold cursor-pointer hover:bg-stone-200">Create new Room</button>
-            <input className="p-2 border border-slate-700 rounded-md" type="text" placeholder="Enter your name"/>
+            <input
+             ref={usernameRef}
+             className="p-2 border border-slate-700 rounded-md" type="text" placeholder="Enter your name"/>
             <div className="mt-3 flex justify-between">
-                <input className="p-2 border border-slate-700 rounded-md flex-2/4 mr-2" type="text" placeholder="Enter room code"/>
+                <input 
+                ref={roomcodeRef}
+                className="p-2 border border-slate-700 rounded-md flex-2/4 mr-2" type="text" placeholder="Enter room code"/>
                 <button className="text-lg flex-1/4 border border-white  p-2 rounded-md bg-white text-stone-950 font-bold cursor-pointer hover:bg-stone-200">Join Room</button>
             </div>
 

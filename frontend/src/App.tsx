@@ -1,8 +1,10 @@
-import { useState } from "react"
+import { useState, useRef } from "react"
 import { ChatComponent } from "./components/ChatComponent";
 import { JoinRoom } from "./components/JoinRoom";
 function App() {
-  const [joinedRoom, setJoinedRoom] = useState<boolean>(true);
+  const [joinedRoom, setJoinedRoom] = useState<boolean>(false);
+  const usernameRef = useRef<HTMLInputElement>(null);
+  const roomCodeRef = useRef<HTMLInputElement>(null);
   const [roomId, setRoomId] = useState<string>("");
 
   function generateRandomRoomId(length: number) {
@@ -26,7 +28,12 @@ function App() {
         roomId = {roomId}
         />
         :
-        <JoinRoom onclick={() => generateRandomRoomId(7)} roomId = {roomId} />
+        <JoinRoom 
+        onclick={() => generateRandomRoomId(7)} 
+        roomId = {roomId} 
+        usernameRef = {usernameRef}
+        roomcodeRef = {roomCodeRef}
+        />
       }
     </div>
   )
