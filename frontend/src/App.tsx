@@ -2,19 +2,17 @@ import { useState } from "react"
 import { ChatComponent } from "./components/ChatComponent";
 import { JoinRoom } from "./components/JoinRoom";
 function App() {
-  const [joinedRoom, setJoinedRoom] = useState<boolean>(false);
+  const [joinedRoom, setJoinedRoom] = useState<boolean>(true);
   const [roomId, setRoomId] = useState<string>("");
 
-  function generateRandomRoomId(length: number): string {
+  function generateRandomRoomId(length: number) {
       const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
       let res = '';
       for(let i = 0;i<length;i++){
           const randomIdx = Math.floor(Math.random() * chars.length);
           res+= chars.charAt(randomIdx);
       }
-      console.log(res);
       setRoomId(res);
-
   }
   
 

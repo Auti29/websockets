@@ -13,4 +13,4 @@ createRoot(document.getElementById('root')!).render(
 //complete the room joining logic
 //complete chat component 
 //put names of users with the message 
-//scale using pub sub
+//scale  pub subs
