@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 const WS_URL = "ws://localhost:8080";
 
-export function ChatComponent ({roomId}: {roomId: string}) {
+export function ChatComponent ({roomId, username}: {username: string, roomId: string}) {
     const [messages, setMessages] = useState<string[]>([]);
     const inputRef = useRef<HTMLInputElement>(null)
     const wsRef = useRef<WebSocket | null>(null);
@@ -13,11 +13,11 @@ export function ChatComponent ({roomId}: {roomId: string}) {
     }
     wsRef.current = ws;
     ws.onopen = () => {
-      //hardcoded logic to join rooms
       ws.send(JSON.stringify(
         {
           "type": "join", 
           "payload": {
+            "username": username,
             "roomId": roomId
           }
         }
@@ -35,6 +35,7 @@ export function ChatComponent ({roomId}: {roomId: string}) {
     wsRef.current?.send(JSON.stringify({
       "type": "chat", 
       "payload": {
+        username: username, 
         message: message
       }
     }))
@@ -42,7 +43,15 @@ export function ChatComponent ({roomId}: {roomId: string}) {
 
     return (
         <div className="border border-slate-400 rounded-lg w-[37vw] h-[85vh] flex flex-col justify-between">
-            <div className="mt-4 ml-5 mr-5 rounded-md h-[85%] border border-slate-400 overflow-hidden flex flex-col">
+          <div className="border border-slate-400 flex"> 
+          <div
+          className="ml-5 font-bold"
+          >username: {username}</div>
+          <div
+          className="ml-5 font-bold"
+          >RoomId: {roomId}</div>
+          </div>
+            <div className="mt-2 ml-5 mr-5 mb-2 rounded-md h-[85%] border border-slate-400 overflow-hidden flex flex-col">
                   {messages.map((m) => {
                     return (<div className="m-1">
                       <p className="bg-white text-black p-1.5  inline-block max-w-[80%] rounded-md">{m}</p>

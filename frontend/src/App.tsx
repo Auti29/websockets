@@ -3,6 +3,7 @@ import { ChatComponent } from "./components/ChatComponent";
 import { JoinRoom } from "./components/JoinRoom";
 function App() {
   const [joinedRoom, setJoinedRoom] = useState<boolean>(false);
+  const [username, setUsername] = useState<string>("");
   const usernameRef = useRef<HTMLInputElement>(null);
   const roomCodeRef = useRef<HTMLInputElement>(null);
   const [roomId, setRoomId] = useState<string>("");
@@ -18,7 +19,6 @@ function App() {
   }
   
 
- 
 
   return (
     <div className="h-screen w-screen bg-black text-white flex justify-center items-center">
@@ -26,6 +26,7 @@ function App() {
         joinedRoom ? 
         <ChatComponent 
         roomId = {roomId}
+        username= {username}
         />
         :
         <JoinRoom 
@@ -33,6 +34,8 @@ function App() {
         roomId = {roomId} 
         usernameRef = {usernameRef}
         roomcodeRef = {roomCodeRef}
+        setJoinedRoom = {setJoinedRoom}
+        setUsername = {setUsername} 
         />
       }
     </div>
