@@ -6,11 +6,10 @@ interface JoinroomInterface {
     roomId: string, 
     usernameRef: React.RefObject<HTMLInputElement | null>, 
     roomcodeRef: React.RefObject<HTMLInputElement | null>, 
-    setJoinedRoom: Dispatch<SetStateAction<boolean>>, 
-    setUsername: Dispatch<SetStateAction<string>>
+    setJoinedRoom: Dispatch<SetStateAction<boolean>>
 }
 
-export function JoinRoom({onclick, roomId, usernameRef, roomcodeRef, setJoinedRoom, setUsername}: JoinroomInterface){
+export function JoinRoom({onclick, roomId, usernameRef, roomcodeRef, setJoinedRoom}: JoinroomInterface){
     const [isCopied,  setIsCopied] = useState<boolean>(false);
 
     return (
@@ -27,11 +26,10 @@ export function JoinRoom({onclick, roomId, usernameRef, roomcodeRef, setJoinedRo
                 onclick()}}
             className="text-lg w-full border border-white mt-4 mb-4 p-2 rounded-md bg-white text-stone-950 font-bold cursor-pointer hover:bg-stone-200">Create new Room</button>
             <input
-             onChange={(e) => setUsername(e.target.value)}
              ref={usernameRef}
              className="p-2 border border-slate-700 rounded-md" type="text" placeholder="Enter your name"/>
             <div className="mt-3 flex justify-between">
-                <input 
+            <input 
                 ref={roomcodeRef}
                 className="p-2 border border-slate-700 rounded-md flex-2/4 mr-2" type="text" placeholder="Enter room code"/>
                 <button
