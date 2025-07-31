@@ -50,23 +50,23 @@ export function ChatComponent ({roomId, username}: {username: string, roomId: st
     return (
         <div className="border border-slate-400 rounded-lg w-[37vw] h-[85vh] flex flex-col justify-between font-mono">
           <div className=" border-slate-400 flex flex-col rounded-lg"> 
-          <div className="flex p-1">
+          <div className="flex pl-1 pt-1 ml-1 mt-2">
             <ChatIcon size="lg"/>
             <h2 className="ml-2 text-2xl font-extrabold">Real Time Chat</h2>
           </div>
-          <div>
-            <p className="text-gray-500 font-bold">temporary room that expires after all users exit</p>
+          <div className="text-gray-500 font-bold ml-3">
+            <p>temporary room that expires after all users exit</p>
           </div>
-          <div className="flex">
+          <div className="flex font-bold bg-gray-800 p-3 ml-3 mr-3 rounded-lg mt-3 mb-2 text-gray-400">
           <div
-          className="ml-5 font-bold"
-          >username: {username}</div>
+          className="ml-2"
+          >username:{username}</div>
           <div
-          className="ml-5 font-bold"
-          >RoomId: {roomId}</div>
+          className="ml-5"
+          >RoomId:{roomId}</div>
           </div>
           </div>
-            <div className="mt-2 ml-5 mr-5 mb-2 rounded-md h-[85%] border border-slate-400 overflow-hidden flex flex-col">
+            <div className="mt-2 ml-3 mr-3 mb-2 rounded-md h-[85%] border border-slate-400 overflow-y-scroll flex flex-col">
                   {messages.map((m, i) => {
                     return (m.message && <div key={i} className="m-1.5 font-mono">
                       <p className="text-xs">{m.username}</p>
@@ -74,7 +74,7 @@ export function ChatComponent ({roomId, username}: {username: string, roomId: st
                     </div>)
                   })}
             </div>
-            <div className="flex justify-between ml-5 mr-5 mb-4">
+            <div className="flex justify-between ml-3 mr-3 mb-4">
               <input 
               ref = {inputRef}
               className="rounded-md border border-slate-400 flex-3/4 p-2.5" 
